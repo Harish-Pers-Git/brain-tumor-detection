@@ -1,18 +1,19 @@
+# Ignore dataset folder
+dataset/
+
 # Ignore virtual environment
 venv/
+
+# Ignore Python cache
 __pycache__/
 *.pyc
 *.pyo
 
-# Ignore OS files
-.DS_Store
-Thumbs.db
-
-# Ignore model files (optional if you want to keep them private or big)
+# Ignore models if large or unnecessary
 *.keras
 *.h5
 
-# Ignore uploads/reports (optional if dynamically generated)
+# Ignore generated/static content (optional)
 static/uploads/
 static/reports/
 static/graphs/
