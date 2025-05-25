@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumor Detection Result</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('/static/images/3.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 800px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff8c00;
+            margin-bottom: 20px;
+        }
+
+        .result-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .tumor-type {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff5733; /* Bright orange */
+        }
+
+        .confidence-level {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1e90ff; /* Dodger blue */
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        img {
+            border: 3px solid white;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        .graph-label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .tumor-info {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            color: white;
+            text-align: left;
+        }
+
+        .tumor-info h4 {
+            font-weight: bold;
+            color: #ff5733;
+        }
+
+        .diagnosis-time {
+            font-size: 1.1rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detection Result</h1>
+        <p class="result-text">Detected Tumor Type: <span class="tumor-type">{{ tumor_type or 'Unknown' }}</span></p>
+        <p class="result-text">Confidence Level: <span class="confidence-level">{{ confidence_level }}%</span></p>
+        
+        <!-- Uploaded Image and Graph Side-by-Side -->
+        <div class="image-container">
+            <!-- Uploaded Image -->
+            <div>
+                <img src="{{ url_for('static', filename=uploaded_image_path.replace('static/', '')) }}" alt="Uploaded Image" />
+                <p class="graph-label">Uploaded Image</p>
+            </div>
+
+            <!-- Confidence Graph -->
+            <div>
+                <img src="{{ url_for('static', filename=graph_path.replace('static/', '')) }}" alt="Confidence Graph" />
+                <p class="graph-label">Tumor Detection Confidence</p>
+            </div>
+        </div>
+
+        <!-- Tumor Explanation and Treatment -->
+        <div class="tumor-info">
+            <h4>Tumor Explanation & Treatment</h4>
+            {% if tumor_type == "Glioma" %}
+                <p><strong>Glioma:</strong> Gliomas are tumors that arise from glial cells, which support nerve cells in the brain. They can cause headaches, seizures, and neurological issues.</p>
+                <p><strong>Treatment:</strong> Treatment options include surgery, radiation therapy, and chemotherapy depending on the grade of the tumor.</p>
+            {% elif tumor_type == "Pituitary" %}
+                <p><strong>Pituitary Tumor:</strong> Tumors of the pituitary gland can lead to hormonal imbalances, headaches, and vision problems.</p>
+                <p><strong>Treatment:</strong> Surgical removal is the primary treatment, followed by radiation therapy or medication to control hormone levels.</p>
+            {% elif tumor_type == "Meningioma" %}
+                <p><strong>Meningioma:</strong> These tumors develop from the meninges, the protective layers around the brain and spinal cord. Symptoms include seizures and neurological deficits.</p>
+                <p><strong>Treatment:</strong> Surgical removal is the primary treatment. Radiation therapy may be considered for inoperable tumors.</p>
+            {% elif tumor_type == "No Tumor" %}
+                <p><strong>No Tumor Detected:</strong> No abnormal growth was found. Continue with regular check-ups if advised by a healthcare professional.</p>
+                <p><strong>Treatment:</strong> No treatment necessary.</p>
+            {% endif %}
+        </div>
+
+        <!-- Diagnosis Time Based on Confidence Level -->
+        <div class="diagnosis-time">
+            {% if confidence_level >= 80 %}
+                <p>Diagnosis: <strong>Immediate Attention Required</strong>. The confidence level is high, and immediate diagnosis is advised.</p>
+            {% elif confidence_level >= 60 %}
+                <p>Diagnosis: <strong>Further Observation Recommended</strong>. The confidence level is moderate, and further observation or follow-up might be necessary.</p>
+            {% else %}
+                <p>Diagnosis: <strong>Low Confidence</strong>. It is advised to seek further medical evaluation for a more accurate diagnosis.</p>
+            {% endif %}
+        </div>
+
+        <!-- Logout Button -->
+        <a href="{{ url_for('logout') }}">
+            <button class="btn btn-primary">Logout</button>
+        </a>
+        <!-- Add Download PDF Button -->
+        <a href="{{ url_for('download_pdf') }}">
+            <button class="btn btn-primary">Download Report as PDF</button>
+        </a>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

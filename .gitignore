@@ -1,0 +1,19 @@
+# Ignore virtual environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore model files (optional if you want to keep them private or big)
+*.keras
+*.h5
+
+# Ignore uploads/reports (optional if dynamically generated)
+static/uploads/
+static/reports/
+static/graphs/
+static/pdfs/
