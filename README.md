@@ -17,8 +17,13 @@ This project is a deep learning-based web application that detects and classifie
 
 🖼️ Demo
 ![image](https://github.com/user-attachments/assets/de07b699-baa0-4a08-b256-4b703e96f88e)
+
+![image](https://github.com/user-attachments/assets/75907a37-18bf-4af8-a2ef-5d78ca317e70)
+
 ![image](https://github.com/user-attachments/assets/c71a31fc-ba50-4c22-979e-9b2fda078ff2)
+
 ![image](https://github.com/user-attachments/assets/5344d460-9620-4a77-a3bf-5d3939cb354d)
+
 ![image](https://github.com/user-attachments/assets/dfbcb7c2-2563-4f64-9936-33c65d7b8b4c)
 
 📁 Project Structure
